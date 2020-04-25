@@ -1,0 +1,53 @@
+Details mainly from https://ipcamtalk.com/threads/r0-ds-2cd2x32-brickfixv2-brick-recovery-and-full-upgrade-tool-enhanced.24343/
+
+Config Bytes
+
+
+0x04-0x05
+	Checksum Location (see below)
+
+0x10	Language
+	0x01 English
+
+0x55	Region
+	0x01 China
+	0x03 World
+	Beware - do not attempt that when the running environment is firmware 5.3.0 or later - there is a quite nasty Hikvision trap in the kernel to catch any messing with the bootpara block.
+
+0x64-0x65
+	devType - Model
+	2698 - DS-2CD2032F-I
+	2698 - DS-2CD2032F-IW
+	0598 - DS-2CD2032-I
+	0698 - DS-2CD2132-I
+	1E98 - DS-2CD2132F-IS
+	1E98 - DS-2CD2132F-IWS
+	0798 - DS-2CD2232-I5
+	0898 - DS-2CD2332-I
+	1298 - DS-2CD2432F-IW
+	1498 - DS-2CD2532F-IS
+	1098 - DS-2CD2632F-IS
+	0E98 - DS-2CD2732F-IS
+	0698 - DS-2CD3132-I
+	1C23 - DS-2DE2103-DE3/W
+	2198 - DS-2CD2T32-I8
+
+	There is some uncertainty here - Please check IPCamTalk forum 
+
+	If location 0x64 already has a 2-digit numeric value rather than 0xFF, no change is needed.
+
+
+
+$ ./mtd_checksum.sh mtd6/mtd6ro_mod
+HikVision Checksum : D2 0C
+
+
+Checksum-16 Calc
+* Add bytes together
+* Hikvision checksum is sum as low-endian
+* Low byte / high byte
+
+Checksum Location bytes  0x04 -> 0x05 
+Checksummed Offset       0x9
+Checksummed Range        0x09 -> 0xFC
+Checksummed Length       0xF4
